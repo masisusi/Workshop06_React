@@ -2,21 +2,18 @@ const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema(
   {
-    // Add title field with String type, required validation, trim, and minlength
     title: {
       type: String,
       required: true,
       trim: true,
       minlength: 1
     },
-    // Add content field with String type, required validation, trim, and minlength
     content: {
       type: String,
       required: true,
       trim: true,
       minlength: 1
     },
-    // Add author field with String type, required validation, and trim
     author: {
       type: String,
       required: true,
@@ -24,7 +21,7 @@ const postSchema = new mongoose.Schema(
     }
   },
   {
-    // Enable timestamps to track creation and update times
+    // Timestamps to track creation and update times
     timestamps: true
   }
 );

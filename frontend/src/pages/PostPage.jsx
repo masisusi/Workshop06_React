@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 
-// TODO (student): Implement single-post view and delete flow.
-// Suggested steps:
-// 1) Fetch a single post with GET /api/posts/:id.
-// 2) Render title, author, date, and content.
-// 3) Add delete handler with DELETE /api/posts/:id.
-// 4) Navigate back to /blog after successful delete.
 function PostPage() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -17,20 +11,49 @@ function PostPage() {
   const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
-    // TODO (student): Replace this placeholder with GET /api/posts/:id fetch logic.
-    setLoading(false)
+    async function fetchPost() {
+      try {
+        const response = await fetch(`/api/posts/${id}`)
+
+        if (!response.ok) {
+          throw new Error('Unable to load the post. Please try again.')
+        }
+
+        const data = await response.json()
+        setPost(data)
+      } catch (error) {
+        setError(error.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPost()
   }, [id])
 
   async function handleDelete() {
-    // TODO (student): Implement DELETE /api/posts/:id and navigate('/blog').
     setDeleting(true)
-    setError('TODO: implement DELETE /api/posts/:id in PostPage')
-    setDeleting(false)
+    setError(null)
+
+    try {
+      const response = await fetch(`/api/posts/${id}`, {
+        method: 'DELETE'
+      })
+
+      if (!response.ok) {
+        throw new Error('Unable to delete the post. Please try again.')
+      }
+
+      navigate('/blog')
+    } catch (error) {
+      setError(error.message)
+    } finally {
+      setDeleting(false)
+    }
   }
 
   if (loading) return <p className="status-msg">Loading…</p>
   if (error && !post) return <p className="status-msg error">{error}</p>
-  if (!post) return <p className="status-msg">TODO: Load a post by id in PostPage.</p>
+  if (!post) return <p className="status-msg">Unable to load the post.</p>
 
   const date = post.createdAt
     ? new Date(post.createdAt).toLocaleDateString('fi-FI', { year: 'numeric', month: 'long', day: 'numeric' })
