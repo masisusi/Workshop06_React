@@ -30,8 +30,8 @@ async function connectToDatabase() {
   }
 
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { dbName: 'blog_06'});
-    console.log('Connected to Mongoose.');
+    await mongoose.connect(process.env.MONGODB_URI, { dbName: 'blog_06'}); // used 'blog_06' since 'blog' was used in a previous workshop.
+    console.log('Connected to MongoDB.');
   } catch (error) {
     console.error(`MongoDB connection error: ${error.message}`);
   }
@@ -58,7 +58,7 @@ connectToDatabase().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
     console.log('Mounted routers:');
-    console.log('  / -> routes/pages.js');
+    // console.log('  / -> routes/pages.js');
     console.log('  /api/posts -> routes/posts.js');
   });
 });
