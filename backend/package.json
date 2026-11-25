@@ -1,7 +1,7 @@
 {
-  "name": "workshop05-rest-api",
+  "name": "workshop06-react-backend",
   "version": "1.0.0",
-  "description": "Express.js workshop starter for page routes and REST API CRUD with MongoDB",
+  "description": "React blog application backend with Express.js, MongoDB and REST API CRUD operations",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
